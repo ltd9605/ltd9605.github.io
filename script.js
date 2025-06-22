@@ -27,7 +27,7 @@ for (let i = 0; i < numStars; i++) {
         twinkleSpeed: Math.random() * 0.02 + 0.005,
         twinkleDir: Math.random() < 0.5 ? -1 : 1,
         color: starColors[Math.floor(Math.random() * starColors.length)],
-        isMeteor: Math.random() < 0.02, // khoảng 2% là sao băng
+        isMeteor: Math.random() < 0.02, 
         meteorSpeedX: Math.random() * 3 + 2,
         meteorSpeedY: Math.random() * 1 + 1
     });
@@ -128,9 +128,9 @@ toggleBtn.addEventListener('click', () => {
   navList.classList.toggle('show');
 });
   document.getElementById("contactForm").addEventListener("submit", function (e) {
-    e.preventDefault(); // Ngăn form reload
+    e.preventDefault(); 
 
-    const emailTo = "ltd9605@gmail.com"; // Email bạn nhận
+    const emailTo = "ltd9605@gmail.com"; 
     const firstName = document.getElementById("firstName").value.trim();
     const lastName = document.getElementById("lastName").value.trim();
     const userEmail = document.getElementById("email").value.trim();
