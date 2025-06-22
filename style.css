@@ -559,6 +559,9 @@ body.light-mode #settings-panel {
     width: 100%;
     padding: 20px;
   }
+    .left-contact{
+         margin-top: 200px;
+    }
 
   .right-contact {
     margin: 0;
