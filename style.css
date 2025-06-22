@@ -499,7 +499,7 @@ body.light-mode #settings-panel {
     color: white;
   }
 #home,#about,#skill,#contact{
-    height: 200vh;
+    height: auto;
 }
   .logo,
   .main-content {
