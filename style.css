@@ -167,13 +167,12 @@ a:visited {
     padding: 10px;
 }
 
-/* Gradient quay bên dưới */
 .ab-icon::before {
     content: "";
     position: absolute;
     inset: 0;
     padding: 14px;
-    /* độ dày viền */
+
     background: conic-gradient(#ff00cc,
             #00ffff,
             #00ff66,
@@ -188,7 +187,6 @@ a:visited {
 }
 
 
-/* Ảnh đứng yên */
 .avatar-wrapper {
     position: relative;
     width: 100%;
@@ -388,7 +386,6 @@ button:hover {
     flex-direction: column;
 }
 
-/* Nút settings nổi góc */
 #settings-btn {
     position: fixed;
     bottom: 20px;
@@ -403,7 +400,6 @@ button:hover {
     font-size: 20px;
 }
 
-/* Panel hiện ra */
 #settings-panel {
     position: fixed;
     bottom: 80px;
@@ -503,7 +499,7 @@ body.light-mode #settings-panel {
     color: white;
   }
 #home,#about,#skill,#contact{
-    height: 150vh;
+    height: 200vh;
 }
   .logo,
   .main-content {
