@@ -127,3 +127,21 @@ const navList = document.querySelector('.right-header ul');
 toggleBtn.addEventListener('click', () => {
   navList.classList.toggle('show');
 });
+  document.getElementById("contactForm").addEventListener("submit", function (e) {
+    e.preventDefault(); // Ngăn form reload
+
+    const emailTo = "ltd9605@gmail.com"; // Email bạn nhận
+    const firstName = document.getElementById("firstName").value.trim();
+    const lastName = document.getElementById("lastName").value.trim();
+    const userEmail = document.getElementById("email").value.trim();
+    const message = document.getElementById("message").value.trim();
+
+    const subject = `Liên hệ từ ${firstName} ${lastName}`;
+    const body =
+      `Người gửi: ${userEmail}%0D%0A%0D%0A` +
+      `Nội dung:%0D%0A${encodeURIComponent(message)}`;
+
+    const mailtoLink = `mailto:${emailTo}?subject=${encodeURIComponent(subject)}&body=${body}`;
+
+    window.location.href = mailtoLink;
+  });
