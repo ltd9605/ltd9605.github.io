@@ -1,40 +1,39 @@
-
-const canvas = document.getElementById('starfield');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+// ⭐ Hiệu ứng sao rơi
+const starCanvas = document.getElementById('starfield');
+const starCtx = starCanvas.getContext('2d');
+starCanvas.width = window.innerWidth;
+starCanvas.height = window.innerHeight;
 
 const numStars = 250;
 const stars = [];
 
 const starColors = [
-    'rgba(255,255,255,ALPHA)',      // trắng
-    'rgba(173,216,230,ALPHA)',      // xanh nhạt
-    'rgba(255,182,193,ALPHA)',      // hồng nhạt
-    'rgba(255,255,153,ALPHA)',      // vàng nhạt
-    'rgba(200,200,255,ALPHA)',      // tím nhạt
-    'rgba(144,238,144,ALPHA)'       // xanh lá nhạt
+    'rgba(255,255,255,ALPHA)',
+    'rgba(173,216,230,ALPHA)',
+    'rgba(255,182,193,ALPHA)',
+    'rgba(255,255,153,ALPHA)',
+    'rgba(200,200,255,ALPHA)',
+    'rgba(144,238,144,ALPHA)'
 ];
 
-// Khởi tạo sao
 for (let i = 0; i < numStars; i++) {
     stars.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
+        x: Math.random() * starCanvas.width,
+        y: Math.random() * starCanvas.height,
         radius: Math.random() * 2 + 0.5,
         speed: Math.random() * 0.3 + 0.05,
         alpha: Math.random() * 0.5 + 0.5,
         twinkleSpeed: Math.random() * 0.02 + 0.005,
         twinkleDir: Math.random() < 0.5 ? -1 : 1,
         color: starColors[Math.floor(Math.random() * starColors.length)],
-        isMeteor: Math.random() < 0.02, 
+        isMeteor: Math.random() < 0.02,
         meteorSpeedX: Math.random() * 3 + 2,
         meteorSpeedY: Math.random() * 1 + 1
     });
 }
 
 function drawStars() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
     for (let star of stars) {
         star.alpha += star.twinkleSpeed * star.twinkleDir;
         if (star.alpha >= 1) {
@@ -45,45 +44,117 @@ function drawStars() {
             star.twinkleDir = 1;
         }
 
-        ctx.beginPath();
+        starCtx.beginPath();
 
         if (star.isMeteor) {
-            ctx.moveTo(star.x, star.y);
-            ctx.lineTo(star.x - 10, star.y - 5);
-            ctx.strokeStyle = star.color.replace('ALPHA', star.alpha);
-            ctx.lineWidth = 2;
-            ctx.stroke();
+            starCtx.moveTo(star.x, star.y);
+            starCtx.lineTo(star.x - 10, star.y - 5);
+            starCtx.strokeStyle = star.color.replace('ALPHA', star.alpha);
+            starCtx.lineWidth = 2;
+            starCtx.stroke();
 
             star.x += star.meteorSpeedX;
             star.y += star.meteorSpeedY;
 
-            if (star.x > canvas.width || star.y > canvas.height) {
-                star.x = Math.random() * canvas.width;
+            if (star.x > starCanvas.width || star.y > starCanvas.height) {
+                star.x = Math.random() * starCanvas.width;
                 star.y = 0;
             }
         } else {
-            ctx.arc(star.x, star.y, star.radius, 0, 2 * Math.PI);
-            ctx.fillStyle = star.color.replace('ALPHA', star.alpha);
-            ctx.fill();
+            starCtx.arc(star.x, star.y, star.radius, 0, 2 * Math.PI);
+            starCtx.fillStyle = star.color.replace('ALPHA', star.alpha);
+            starCtx.fill();
 
             star.y += star.speed;
-            if (star.y > canvas.height) {
+            if (star.y > starCanvas.height) {
                 star.y = 0;
-                star.x = Math.random() * canvas.width;
+                star.x = Math.random() * starCanvas.width;
             }
         }
     }
 
     requestAnimationFrame(drawStars);
 }
-
 drawStars();
 
-window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-});
+// 🌸 Cánh hoa rơi
+const sakuraCanvas = document.getElementById("sakuraleef");
+const sakuraCtx = sakuraCanvas.getContext("2d");
+sakuraCanvas.width = window.innerWidth;
+sakuraCanvas.height = window.innerHeight;
 
+let petals = [];
+
+function resizeCanvas() {
+    starCanvas.width = window.innerWidth;
+    starCanvas.height = window.innerHeight;
+    sakuraCanvas.width = window.innerWidth;
+    sakuraCanvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+function createPetal() {
+    return {
+        x: Math.random() * sakuraCanvas.width,
+        y: Math.random() * -sakuraCanvas.height,
+        speedY: Math.random() * 1 + 0.5,
+        speedX: Math.random() * 0.5 - 0.25,
+        size: Math.random() * 0.4 + 0.2,
+        angle: Math.random() * Math.PI * 2,
+        rotateSpeed: (Math.random() - 0.5) * 0.02,
+        color: "rgba(255,182,193,1)"
+    };
+}
+
+for (let i = 0; i < 100; i++) {
+    petals.push(createPetal());
+}
+
+function drawPetal(ctx, x, y, size, angle, color) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(angle);
+    ctx.scale(size, size);
+
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.bezierCurveTo(-5, -10, -10, -20, 0, -30);
+    ctx.bezierCurveTo(10, -20, 5, -10, 0, 0);
+    ctx.fillStyle = color;
+    ctx.globalAlpha = 0.8;
+    ctx.fill();
+
+    ctx.restore();
+}
+
+function updatePetals() {
+    petals.forEach(p => {
+        p.y += p.speedY;
+        p.x += p.speedX;
+        p.angle += p.rotateSpeed;
+
+        if (p.y > sakuraCanvas.height + 30 || p.x < -30 || p.x > sakuraCanvas.width + 30) {
+            Object.assign(p, createPetal(), { y: 0 });
+        }
+    });
+}
+
+function drawPetals() {
+    sakuraCtx.clearRect(0, 0, sakuraCanvas.width, sakuraCanvas.height);
+    for (let p of petals) {
+        drawPetal(sakuraCtx, p.x, p.y, p.size, p.angle, p.color);
+    }
+    updatePetals();
+}
+
+function animatePetals() {
+    drawPetals();
+    requestAnimationFrame(animatePetals);
+}
+animatePetals();
+
+// 🔊 Nhạc nền và cài đặt
 const music = document.getElementById("bg-music");
 const toggleMusic = document.getElementById("toggle-music");
 const toggleTheme = document.getElementById("toggle-theme");
@@ -109,28 +180,39 @@ toggleMusic.addEventListener("change", () => {
 
 toggleTheme.addEventListener("change", () => {
     const isLight = toggleTheme.checked;
+
     document.body.classList.toggle("light-mode", isLight);
-    currentStarColor = isLight ? 'rgba(120, 120, 140, ALPHA)' : 'rgba(255, 255, 255, ALPHA)';
     localStorage.setItem("theme", isLight ? "light" : "dark");
+
+    // 👉 Bật/tắt hiệu ứng theo theme
+    sakuraCanvas.style.display = isLight ? "block" : "none";
+    starCanvas.style.display = isLight ? "none" : "block";
 });
+
 window.addEventListener("DOMContentLoaded", () => {
     const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "light") {
+    const isLight = savedTheme === "light";
+
+    if (isLight) {
         document.body.classList.add("light-mode");
         toggleTheme.checked = true;
-        currentStarColor = 'rgba(120, 120, 140, ALPHA)';
     }
+
+    sakuraCanvas.style.display = isLight ? "block" : "none";
+    starCanvas.style.display = isLight ? "none" : "block";
 });
+
+// ☰ Toggle menu
 const toggleBtn = document.querySelector('.menu-toggle');
 const navList = document.querySelector('.right-header ul');
-
 toggleBtn.addEventListener('click', () => {
-  navList.classList.toggle('show');
+    navList.classList.toggle('show');
 });
-  document.getElementById("contactForm").addEventListener("submit", function (e) {
-    e.preventDefault(); 
 
-    const emailTo = "ltd9605@gmail.com"; 
+// 📧 Gửi mail từ form
+document.getElementById("contactForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const emailTo = "ltd9605@gmail.com";
     const firstName = document.getElementById("firstName").value.trim();
     const lastName = document.getElementById("lastName").value.trim();
     const userEmail = document.getElementById("email").value.trim();
@@ -138,10 +220,9 @@ toggleBtn.addEventListener('click', () => {
 
     const subject = `Liên hệ từ ${firstName} ${lastName}`;
     const body =
-      `Người gửi: ${userEmail}%0D%0A%0D%0A` +
-      `Nội dung:%0D%0A${encodeURIComponent(message)}`;
+        `Người gửi: ${userEmail}%0D%0A%0D%0A` +
+        `Nội dung:%0D%0A${encodeURIComponent(message)}`;
 
     const mailtoLink = `mailto:${emailTo}?subject=${encodeURIComponent(subject)}&body=${body}`;
-
     window.location.href = mailtoLink;
-  });
+});
