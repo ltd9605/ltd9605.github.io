@@ -501,6 +501,7 @@ body.light-mode {
   }
 #home,#about,#skill,#contact{
     height: auto;
+    font-size: medium;
 }
   .logo,
   .main-content {
